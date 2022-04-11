@@ -150,7 +150,7 @@ function checkoutCode() {
             return;
         }
         // Extract all components from `private-action` input parameter
-        const [org, repo, path] = repoParts.split('/');
+        const [org, repo, path, subpath] = repoParts.split('/');
         // If `org` or `repo` is missing, return an error
         if (!org || !repo) {
             core.setFailed(ACTION_ERROR);
@@ -166,7 +166,7 @@ function checkoutCode() {
             // Checkout the reference
             yield checkout(tempFolderName, ref);
             // Set the expected path for the `action.yml` file
-            const actionFileFolder = [tempFolderName, path].filter(p => p).join('/');
+            const actionFileFolder = [tempFolderName, path, subpath].filter(p => p).join('/');
             // Execute the action
             yield executeAction(actionFileFolder);
         }
